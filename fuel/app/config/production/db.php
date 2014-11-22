@@ -6,9 +6,9 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=impress_galeriedephotosfuelphpp',
-			'username'   => 'impress_creadbu',
-			'password'   => 'ewibat7254',
+			'dsn'        => 'mysql:host=localhost;dbname=fuelphpp',
+			'username'   => 'root',
+			'password'   => '',
 		),
 	),
 );
