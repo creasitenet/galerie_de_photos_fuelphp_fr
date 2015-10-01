@@ -10,7 +10,7 @@ return array(
             'connection'  => array(
                 //'hostname'   => '127.0.0.1',
                 //'database'   => 'fuel',
-                'dsn'        => 'mysql:host=127.0.0.1;dbname=galerie_de_photos_fuelphp',
+                'dsn'        => 'mysql:host=127.0.0.1;dbname=galerie_fuelphp',
                 'username'   => 'root',
                 'password'   => '',
             ),

@@ -6,7 +6,7 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=127.0.0.1;dbname=galerie_de_photos_fuelphp',
+			'dsn'        => 'mysql:host=127.0.0.1;dbname=github_galerie_fuelphp',
 			'username'   => 'root',
 			'password'   => '',
 		),

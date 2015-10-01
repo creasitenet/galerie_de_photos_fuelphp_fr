@@ -25,7 +25,6 @@ return array(
 	 * Set this to null to have it automatically detected.
 	 */
 	 'base_url'  => null,
-	 //null,
 
 	/**
 	 * url_suffix - Any suffix that needs to be added to
@@ -47,7 +46,7 @@ return array(
 
 	
 	'profiling'  => false,
-	//'profiling'  => true,
+	'profiling'  => true,
 
 	/**
 	 * Default location for the file cache

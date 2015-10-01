@@ -1,139 +1,158 @@
 <?php
 class Controller_Upload extends Controller_Base {
     
-    // Post Ajax Upload, retour json
-	public function action_post_ajax_upload() {
-
-		$d=array();
-        $d['resultat'] = 0; 
-		// get session
-		$upload_id = Session::get('upload_id');
-
+	
+	// Upload // Ajax // Json.
+    public function action_postAjaxUpload() {
+        $d['result'] = 0; 	
+		
 		if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $erreur = "Seule la methode POST est autorisée ici.";
 		}
-
+		
 		// Préparation
-        if (!isset($erreur)) {
+        if (!isset($error)) {
 	        $fileup=$_FILES['Filedata'];
 	        $fileup_name=$_FILES['Filedata']['name'];
-	        $fileup_poids=$_FILES['Filedata']['size'];
-	        $fileup_erreur=$_FILES['Filedata']['error'];
+	        $fileup_size=$_FILES['Filedata']['size'];
+	        $fileup_error=$_FILES['Filedata']['error'];
 	        $fileup_type=$_FILES['Filedata']['type'];
 	        $fileup_tmp_name=$_FILES['Filedata']['tmp_name'];
-	        $fichier_erreurs = array(
+	        $files_errors = array(
 	        0=>"Upload réussi..",
-	        1=>"Le fichier dépasse le 'upload_max_filesize' de php.ini.",
-	        2=>"Le fichier dépasse le 'MAX_FILE_SIZE' spécifiée dans le formulaire HTML.",
+	        1=>"Le fichier est trop lourd.",
+	        2=>"La photo est trop grande.",
 	        3=>"Le fichier n'a été que partiellement téléchargé.",
 	        4=>"Aucun fichier n'a été uploadé.",
 	        6=>"Pas de dossier temporaire, contactez le webmaster.",
 	        7=>"Échec de l'écriture du fichier sur le disque."
 	        );
-	        if($fileup_erreur!=0) { // Erreur
-	            $erreur = $fichier_erreurs[$fileup_erreur];
+	        if($fileup_error!=0) { // Erreur
+	            $error = $files_errors[$fileup_error];
 	        }
     	}
 
         // Extension 
-        if (!isset($erreur)) {
-        	$fileup_nom_lower = strtolower($fileup_name);
-        	$fileup_extension = substr(strrchr($fileup_nom_lower, '.'),1); 
-        	$fileup_base = basename($fileup_nom_lower,'.'.$fileup_extension); 
-        	$fileup_nom_temp=Inflector::friendly_title($fileup_base, '_', true); 
-        	$fileup_nom=$fileup_nom_temp.'.'.$fileup_extension;	     
-	        $image_extensions_autorisees = array ('bmp', 'gif', 'iff', 'jp2', 'jpg', 'jpeg', 'png', 'psd', 'tiff', 'wbmp');
-	        if (!in_array($fileup_extension, $image_extensions_autorisees)) {
-	            $erreur = $fileup_name." : Extension de fichier non supportée !";
+        if (!isset($error)) {
+        	$fileup_name_lower = strtolower($fileup_name); // EN MINUSCULE
+        	$fileup_extension = substr(strrchr($fileup_name_lower, '.'),1); // EXTENSION EN MINUSCULE SANS LE POINT
+        	$fileup_base = basename($fileup_name_lower,'.'.$fileup_extension); // UN NOM EN MINUSCULE SANS EXTENSION
+        	$fileup_name_temp = Inflector::friendly_title($fileup_base, '_', true); // ON NETTOIRE ENCORE
+        	$fileup_new_name=$fileup_name_temp.'.'.$fileup_extension;
+	        //$document_auth_extensions = array ('doc', 'fla', 'pdf', 'swf', 'txt');
+	        //if (!in_array($fileup_extension, $document_auth_extensions)) {
+	        //    $error = $fileup_name." : Extension de fichier non supportée !";
+	        //}
+	        $picture_auth_extensions = array ('bmp', 'gif', 'iff', 'jp2', 'jpg', 'jpeg', 'png', 'psd', 'tiff', 'wbmp');
+	        if (!in_array($fileup_extension, $picture_auth_extensions)) {
+	            $error = $fileup_name." : Extension de fichier non supportée !";
 	        }
 	    }
 
         // Poid maximum
-        if (!isset($erreur)) {
-	        if(($fileup_poids==0) OR ($fileup_poids > 1000000)) {
-	            if($fileup_poids==0) {
-	                 $erreur = 'Fichier de 0 ko !';
-	            } elseif ($fileup_poids>1000000) {
-	                $erreur = $fileup_name." : trop lourd : Max 1mo !"; 
+        if (!isset($error)) {
+	        if(($fileup_size==0) OR ($fileup_size > 2000000)) {
+	            if($fileup_size==0) {
+	                 $error = 'Fichier de 0 ko !';
+	            } elseif ($fileup_size>2000000) {
+	                $error = $fileup_name." : trop lourd : Max 2mo !"; 
 	            }
 	        }
 	    }
 
         // Taille // Seulement pour les images
-        if (!isset($erreur)) {
-		        $fileup_taille = getimagesize($fileup_tmp_name);
-		        if (($fileup_taille[0] > 1024) OR ($fileup_taille[1] > 1024)) {
-		            $erreur = $fileup_name." trop grande : Max 1024 x 1024 pixels !";
+        if (!isset($error)) {
+		        $fileup_dim = getimagesize($fileup_tmp_name);
+		        if (($fileup_dim[0] > 1024) OR ($fileup_dim[1] > 1024)) {
+		            $error = $fileup_name." trop grande : Max 1024 x 1024 pixels !";
 		        }
 	    }
 
         // Déplacement du dossier tmeporaire au dossier TEMP souhaité 
-        if (!isset($erreur)) {
-	        $fileup_temporaire=DOCROOT.'serveur/TEMP/'.$fileup_nom; //Chemin de l'image dans une variable.
+        if (!isset($error)) {
+	        $fileup_temporaire = DOCROOT.'server/TEMP/'.$fileup_new_name; //Chemin de l'image dans une variable.
 	        if (!move_uploaded_file($fileup_tmp_name, $fileup_temporaire)) { //Déplacement du fichier avec le son nom d'origine
-	            $erreur = $fileup_name." n'a pas été copié correctement !";
+	            $error = $fileup_name." n'a pas été copié correctement !";
 	        }
 	    }
-
+		
 	    // imagecreatefrom // Seulement pour les images
-        if (!isset($erreur)) {
+        if (!isset($error)) {
 				if ($fileup_extension=='jpg') { $fileup_extensionx='jpeg'; } else { $fileup_extensionx=$fileup_extension; }
 				try {
 				    @call_user_func('imagecreatefrom'.$fileup_extensionx,$fileup_temporaire);
 				} catch (Exception $e) {
-				    $erreur = $fileup_name." : Exception : ".$e->getMessage();
+				    $error = $fileup_name." : Exception : ".$e->getMessage();
 				}
 		}
-
+		
 		// Enregistrement en base de donnée
-        if (!isset($erreur)) {
-				$e = Model_Photo::forge(array(
-						'album_id' => $upload_id,
-						'slug' => $fileup_nom,
-					));
-				if ($e and $e->save()) {
-					if ($fileup_taille[0]>900) {
-					    Image::load($fileup_temporaire)->resize(900);
-					}
-					$fileup_destination_finale=DOCROOT.'serveur/photos/'.$e->id.'-'.$fileup_nom; 
-				    copy($fileup_temporaire, $fileup_destination_finale); 
-				    unlink($fileup_temporaire); 
-					$d['resultat'] = 1;
-					$d['message'] = "Photo ajoutée.";				
-				} else {
-					$d['message'] = "Impossible d'ajouter le fichier, contactez le webmaster.";
+		// Déplacement
+        if (!isset($error)) {
+        		
+			$e = Model_Picture::forge(array(
+				'slug' => $fileup_new_name,
+				'file_extension' => $fileup_extension,
+				'file_type' => $fileup_type,
+				'file_size' => $fileup_size,
+			));
+			if ($e and $e->save()) {
+				if ($fileup_dim[0]>900) {
+				    Image::load($fileup_temporaire)->resize(900);
 				}
+				$fileup_final_destination = DOCROOT.'server/pictures/'.$e->id.'-'.$fileup_new_name; //Chemin de l'image dans une variable.
+				copy($fileup_temporaire, $fileup_final_destination); // Déplacement du fichier 
+				unlink($fileup_temporaire);  // on supprime l'image 00 
+				$d['result'] = 1;
+				$d['message'] = "Photo ajoutée.";
+			} else {
+				$d['message'] = "Impossible d'ajouter la photo : si le problème persiste, contactez le webmaster.";
+			}
         } else { // Sinon erreur
-            $d['message'] = $erreur;        	
+            $d['message'] = $error;        	
         }
-
-        // Retour json
+		// Retour json
         return json_encode($d);
         die;
-	}
-	
+    }
+
 	// Get Ajax Refresh de la liste des photos, retour html
-	public function action_get_ajax_refresh_liste_des_photos()	{
-		$id = Session::get('upload_id');
-		$data['photos'] = Model_Photo::find('all', array(
-	        'where' => array(array('album_id', '=', $id)),
+	public function action_getAjaxRefresh()	{
+		$data['pictures'] = Model_Picture::find('all', array(
 	        'order_by' => array('created_at' => 'desc')
 	    ));
-		$d = View::forge('albums/_modifier_photos', $data);
+		$d = View::forge('galerie/_pictures', $data);
 		return $d; // html
 	}
-
+	
+	
 	// Post Supprimer photo
-	public function action_supprimer_photo($id)	{
-		if ($photo = Model_Photo::find($id)) {
-            $photo->delete();
-            Session::set_flash('success', e("La photo a été supprimé."));
+	public function action_getAjaxDelete($id) {
+		if ($e = Model_Picture::find($id)) {
+            $e->delete();
+            Session::set_flash('success_growl', e("La photo a été supprimé."));
         } else {
-            Session::set_flash('error', e("Impossible de supprimer la photo, contactez le webmaster."));
+            Session::set_flash('error_growl', e("Impossible de supprimer la photo, contactez le webmaster."));
         }
         Response::redirect_back();
-		
 	}
+	
+    // Delete // Ajax // Json 
+    /*
+    public function action_postAjaxDelete() {
+    	$id = Input::get('id');
+		if ($e = Model_Picture::find($id)) {
+            $e->delete();
+			$d["result"] =  1;
+	        $d["message"] =  "Photo supprimé.";
+        } else {
+			$d["result"] =  0;
+	        $d["message"] =  "Impossible de supprimer la photo, contactez le webmaster.";
+        }
+        return json_encode($d);
+    }
+	*/
+
 
 
 }

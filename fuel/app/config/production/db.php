@@ -6,7 +6,7 @@
 return array(
 	'default' => array(
 		'connection'  => array(
-			'dsn'        => 'mysql:host=localhost;dbname=fuelphpp',
+			'dsn'        => 'mysql:host=localhost;dbname=galerie_fuelphpp',
 			'username'   => 'root',
 			'password'   => '',
 		),

@@ -1,0 +1,22 @@
+<?php defined('COREPATH') or exit('No direct script access allowed'); ?>
+
+ERROR - 2015-10-01 19:06:39 --> 1049 - SQLSTATE[HY000] [1049] Unknown database 'github_fuelphp_todo' in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\core\classes\database\pdo\connection.php on line 112
+ERROR - 2015-10-01 19:29:34 --> Error - Could not find asset: bootstrap/css/slate.css in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\core\classes\asset\instance.php on line 261
+ERROR - 2015-10-01 22:10:37 --> Notice - Undefined property: Controller_Todo::$auth in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\app\classes\controller\todo.php on line 29
+ERROR - 2015-10-01 22:11:00 --> Notice - Undefined property: Controller_Todo::$auth in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\app\classes\controller\todo.php on line 29
+ERROR - 2015-10-01 22:11:46 --> Notice - Undefined property: Controller_Todo::$auth in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\app\classes\controller\todo.php on line 29
+ERROR - 2015-10-01 22:12:14 --> Notice - Undefined property: Controller_Todo::$auth in C:\wamp\www\PROJETS\_GITHUB\todo_fuelphp_fr\fuel\app\classes\controller\todo.php on line 29
+ERROR - 2015-10-01 22:47:11 --> Fatal Error - Class 'Controller_Base' not found in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\galerie.php on line 2
+ERROR - 2015-10-01 22:47:12 --> Fatal Error - Class 'Controller_Base' not found in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\galerie.php on line 2
+ERROR - 2015-10-01 22:47:13 --> Fatal Error - Class 'Controller_Base' not found in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\galerie.php on line 2
+ERROR - 2015-10-01 22:47:38 --> 1054 - SQLSTATE[42S22]: Column not found: 1054 Unknown column 't0.titre' in 'field list' with query: "SELECT `t0`.`id` AS `t0_c0`, `t0`.`titre` AS `t0_c1`, `t0`.`slug` AS `t0_c2`, `t0`.`created_at` AS `t0_c3`, `t0`.`updated_at` AS `t0_c4` FROM `albums` AS `t0` ORDER BY `t0`.`created_at` ASC" in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\core\classes\database\pdo\connection.php on line 272
+ERROR - 2015-10-01 23:19:05 --> Warning - include_once(_pictures.php): failed to open stream: No such file or directory in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\views\galerie\index.php on line 3
+ERROR - 2015-10-01 23:20:55 --> Notice - Undefined variable: album in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\views\galerie\index.php on line 20
+ERROR - 2015-10-01 23:37:10 --> Notice - Undefined variable: picture_auth_extensions in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\upload.php on line 47
+ERROR - 2015-10-01 23:37:54 --> Warning - move_uploaded_file(C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\server/TEMP/57.jpg): failed to open stream: No such file or directory in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\upload.php on line 74
+ERROR - 2015-10-01 23:38:30 --> 1146 - SQLSTATE[42S02]: Base table or view not found: 1146 Table 'github_galerie_fuelphp.photos' doesn't exist with query: "INSERT INTO `photos` (`album_id`, `slug`, `created_at`, `updated_at`) VALUES (null, '57.jpg', 1443735510, 1443735510)" in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\core\classes\database\pdo\connection.php on line 272
+ERROR - 2015-10-01 23:38:58 --> Notice - Undefined variable: fileup_taille in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\classes\controller\upload.php on line 100
+ERROR - 2015-10-01 23:43:30 --> Error - The requested view could not be found: _pictures.php in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\core\classes\view.php on line 398
+ERROR - 2015-10-01 23:57:34 --> Notice - Undefined variable: pictures in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\views\galerie\_pictures.php on line 5
+ERROR - 2015-10-01 23:57:50 --> Warning - include(galerie/_pictures): failed to open stream: No such file or directory in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\views\galerie\index.php on line 28
+ERROR - 2015-10-01 23:57:57 --> Warning - include(galerie/_pictures.php): failed to open stream: No such file or directory in C:\wamp\www\PROJETS\_GITHUB\galerie_de_photos_fuelphp_fr\fuel\app\views\galerie\index.php on line 28
